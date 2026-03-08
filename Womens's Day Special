@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Women's Day</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300;1,600&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --deep: #1a0a2e;
+    --rose: #8b1a4a;
+    --blush: #d4426e;
+    --cream: #f9f3ec;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--deep);
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: var(--white);
+  }
+
+  /* ── AMBIENT BACKGROUND ── */
+  .bg-layer {
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(139,26,74,0.45) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 80%, rgba(212,66,110,0.3) 0%, transparent 55%),
+      radial-gradient(ellipse 100% 80% at 50% 50%, rgba(26,10,46,1) 30%, #0d0418 100%);
+  }
+  .bg-grid {
+    position: fixed; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* ── HEADER STRIP ── */
+  .header-strip {
+    position: relative; z-index: 10;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 14px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    backdrop-filter: blur(10px);
+    background: rgba(26,10,46,0.6);
+  }
+  .header-strip .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 600; letter-spacing: 4px;
+    color: var(--gold); text-transform: uppercase;
+  }
+  .header-strip .date {
+    font-size: 0.7rem; letter-spacing: 3px; color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+  }
+
+  /* ── PAGE TITLE ── */
+  .page-title {
+    position: relative; z-index: 10;
+    text-align: center;
+    padding: 60px 20px 20px;
+    animation: fadeDown 1s ease both;
+  }
+  .page-title .eyebrow {
+    font-size: 0.65rem; letter-spacing: 6px; color: var(--gold);
+    text-transform: uppercase; margin-bottom: 16px;
+  }
+  .page-title h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 700; line-height: 1.05;
+    background: linear-gradient(135deg, #fff 0%, var(--gold-light) 50%, #fff 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .page-title .subtitle {
+    font-size: 0.75rem; letter-spacing: 4px; color: rgba(255,255,255,0.35);
+    margin-top: 14px; text-transform: uppercase;
+  }
+  .gold-rule {
+    width: 80px; height: 1px; background: var(--gold);
+    margin: 20px auto 0; opacity: 0.6;
+  }
+
+  /* ── POPUP OVERLAY ── */
+  #popup {
+    position: fixed; inset: 0; z-index: 100;
+    display: flex; justify-content: center; align-items: center;
+    background: rgba(10,4,22,0.85);
+    backdrop-filter: blur(12px);
+    animation: fadeIn 0.6s ease;
+  }
+
+  .popup-card {
+    background: linear-gradient(160deg, #1e0d35 0%, #130722 100%);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 2px;
+    padding: 50px 48px;
+    width: min(480px, 90vw);
+    position: relative;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.7), inset 0 1px 0 rgba(201,168,76,0.15);
+    animation: slideUp 0.7s cubic-bezier(0.16,1,0.3,1) both;
+  }
+
+  /* corner accents */
+  .popup-card::before, .popup-card::after {
+    content: ''; position: absolute;
+    width: 20px; height: 20px;
+    border-color: var(--gold); border-style: solid; opacity: 0.5;
+  }
+  .popup-card::before { top: 12px; left: 12px; border-width: 1px 0 0 1px; }
+  .popup-card::after  { bottom: 12px; right: 12px; border-width: 0 1px 1px 0; }
+
+  .popup-card .form-eyebrow {
+    font-size: 0.6rem; letter-spacing: 5px; color: var(--gold);
+    text-transform: uppercase; margin-bottom: 10px;
+  }
+  .popup-card h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; font-weight: 700; color: var(--white);
+    line-height: 1.15; margin-bottom: 6px;
+  }
+  .popup-card .form-desc {
+    font-size: 0.75rem; color: rgba(255,255,255,0.4);
+    margin-bottom: 32px; line-height: 1.6;
+  }
+
+  .field-group { margin-bottom: 20px; }
+  .field-group label {
+    display: block; font-size: 0.6rem; letter-spacing: 3px;
+    color: rgba(201,168,76,0.7); text-transform: uppercase; margin-bottom: 8px;
+  }
+  .field-group input[type="text"] {
+    width: 100%; background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-bottom-color: rgba(201,168,76,0.4);
+    color: var(--white); font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem; padding: 12px 16px;
+    outline: none; border-radius: 1px; transition: all 0.3s;
+  }
+  .field-group input[type="text"]:focus {
+    border-color: var(--gold); background: rgba(201,168,76,0.06);
+    box-shadow: 0 4px 20px rgba(201,168,76,0.1);
+  }
+  .field-group input[type="text"]::placeholder { color: rgba(255,255,255,0.2); }
+
+  .upload-zone {
+    border: 1px dashed rgba(201,168,76,0.3);
+    border-radius: 1px; padding: 22px;
+    text-align: center; cursor: pointer;
+    transition: all 0.3s; position: relative;
+    background: rgba(255,255,255,0.02);
+  }
+  .upload-zone:hover { border-color: var(--gold); background: rgba(201,168,76,0.05); }
+  .upload-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .upload-zone .upload-icon { font-size: 1.5rem; margin-bottom: 6px; }
+  .upload-zone p { font-size: 0.72rem; color: rgba(255,255,255,0.35); line-height: 1.5; }
+  .upload-zone .upload-name { color: var(--gold-light); font-size: 0.75rem; margin-top: 6px; display: none; }
+
+  .submit-btn {
+    width: 100%; margin-top: 28px;
+    background: linear-gradient(135deg, var(--rose) 0%, var(--blush) 100%);
+    border: none; color: var(--white); cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem; letter-spacing: 4px; font-weight: 700;
+    text-transform: uppercase; padding: 16px;
+    border-radius: 1px; position: relative; overflow: hidden;
+    transition: all 0.3s;
+  }
+  .submit-btn::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.12) 100%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .submit-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 30px rgba(212,66,110,0.4); }
+  .submit-btn:hover::before { opacity: 1; }
+  .submit-btn:active { transform: translateY(0); }
+
+  /* ── GREETING CARD ── */
+  #card {
+    position: relative; z-index: 10;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 40px 20px 80px;
+    animation: fadeIn 1s ease;
+  }
+  #card.hidden { display: none; }
+
+  .card-inner {
+    width: min(680px, 95vw);
+    background: linear-gradient(160deg, rgba(30,13,53,0.95) 0%, rgba(19,7,34,0.98) 100%);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 2px;
+    padding: 56px 48px;
+    text-align: center;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,168,76,0.05);
+    position: relative;
+  }
+
+  /* four-corner decorations */
+  .corner { position: absolute; width: 28px; height: 28px; border-color: var(--gold); border-style: solid; opacity: 0.4; }
+  .corner-tl { top: 16px; left: 16px; border-width: 1px 0 0 1px; }
+  .corner-tr { top: 16px; right: 16px; border-width: 1px 1px 0 0; }
+  .corner-bl { bottom: 16px; left: 16px; border-width: 0 0 1px 1px; }
+  .corner-br { bottom: 16px; right: 16px; border-width: 0 1px 1px 0; }
+
+  .avatar-wrap {
+    position: relative; display: inline-block; margin-bottom: 28px;
+  }
+  .avatar-ring {
+    position: absolute; inset: -8px;
+    border-radius: 50%; border: 1px solid var(--gold);
+    opacity: 0.5; animation: spinSlow 12s linear infinite;
+  }
+  .avatar-ring-2 {
+    position: absolute; inset: -16px;
+    border-radius: 50%; border: 1px dashed rgba(201,168,76,0.25);
+    animation: spinSlow 20s linear infinite reverse;
+  }
+  #userimg {
+    width: 160px; height: 160px; border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--gold);
+    box-shadow: 0 0 40px rgba(201,168,76,0.25), 0 0 0 6px rgba(201,168,76,0.08);
+    display: block;
+  }
+
+  .greeting-tag {
+    font-size: 0.6rem; letter-spacing: 5px; color: var(--gold);
+    text-transform: uppercase; margin-bottom: 10px;
+  }
+  #username {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 700;
+    color: var(--white); line-height: 1.1; margin-bottom: 6px;
+  }
+  .card-divider {
+    display: flex; align-items: center; gap: 16px;
+    margin: 22px auto; width: 70%;
+  }
+  .card-divider span { flex: 1; height: 1px; background: rgba(201,168,76,0.2); }
+  .card-divider em { color: var(--gold); font-style: normal; font-size: 0.9rem; }
+
+  #quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.55rem);
+    font-style: italic; font-weight: 300;
+    color: rgba(255,255,255,0.75); line-height: 1.7;
+    max-width: 500px; margin: 0 auto 28px;
+  }
+
+  .card-footer {
+    font-size: 0.6rem; letter-spacing: 4px; color: rgba(255,255,255,0.2);
+    text-transform: uppercase; margin-top: 10px;
+  }
+
+  /* badge row */
+  .badge-row {
+    display: flex; justify-content: center; gap: 24px; margin: 24px 0 10px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 6px 18px; border-radius: 20px;
+    font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+  }
+
+  /* ── PETALS ── */
+  .petal {
+    position: fixed; pointer-events: none; z-index: 5;
+    top: -40px; font-size: 20px;
+    animation: petalFall linear infinite;
+    will-change: transform;
+  }
+  @keyframes petalFall {
+    0%   { transform: translateY(0)   rotate(0deg) scale(1); opacity: 0; }
+    5%   { opacity: 1; }
+    90%  { opacity: 0.6; }
+    100% { transform: translateY(110vh) rotate(720deg) scale(0.5); opacity: 0; }
+  }
+
+  /* ── KEYFRAMES ── */
+  @keyframes fadeIn   { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: none; } }
+  @keyframes slideUp  { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
+  @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="bg-layer"></div>
+<div class="bg-grid"></div>
+
+<!-- HEADER -->
+<header class="header-strip">
+  <div class="logo">Women's Day</div>
+  <div class="date">March 8 · 2025</div>
+</header>
+
+<!-- PAGE TITLE -->
+<div class="page-title">
+  <p class="eyebrow">Celebrating Every Woman</p>
+  <h1>Happy International<br>Women's Day</h1>
+  <p class="subtitle">Strength · Grace · Legacy</p>
+  <div class="gold-rule"></div>
+</div>
+
+<!-- POPUP -->
+<div id="popup">
+  <div class="popup-card">
+    <p class="form-eyebrow">Personalize Your Card</p>
+    <h2>Create Your<br>Tribute</h2>
+    <p class="form-desc">Upload a photo and enter a name to generate a personalized Women's Day greeting.</p>
+
+    <div class="field-group">
+      <label>Your Name</label>
+      <input type="text" id="name" placeholder="e.g. Priya Sharma">
+    </div>
+
+    <div class="field-group">
+      <label>Your Photo</label>
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" id="imageInput" accept="image/*">
+        <div class="upload-icon">📷</div>
+        <p>Click to browse or drop a photo here</p>
+        <p class="upload-name" id="fileName"></p>
+      </div>
+    </div>
+
+    <button class="submit-btn" onclick="showGreeting()">Generate My Card →</button>
+  </div>
+</div>
+
+<!-- GREETING CARD -->
+<div id="card" class="hidden">
+  <div class="card-inner">
+    <span class="corner corner-tl"></span>
+    <span class="corner corner-tr"></span>
+    <span class="corner corner-bl"></span>
+    <span class="corner corner-br"></span>
+
+    <div class="avatar-wrap">
+      <div class="avatar-ring-2"></div>
+      <div class="avatar-ring"></div>
+      <img id="userimg" src="" alt="Portrait">
+    </div>
+
+    <p class="greeting-tag">A tribute to</p>
+    <h2 id="username"></h2>
+
+    <div class="card-divider"><span></span><em>✦</em><span></span></div>
+
+    <p id="quote"></p>
+
+    <div class="badge-row">
+      <span class="badge">Strength</span>
+      <span class="badge">Grace</span>
+      <span class="badge">Empowerment</span>
+    </div>
+
+    <p class="card-footer">International Women's Day · March 8</p>
+  </div>
+</div>
+
+<div id="flowers"></div>
+<audio id="music" loop><source src="music.mp3" type="audio/mpeg"></audio>
+
+<script>
+const quotes = [
+  "The most courageous act is still to think for yourself. Aloud.",
+  "She believed she could, so she did.",
+  "A woman is like a tea bag — you never know how strong she is until she's in hot water.",
+  "Women are the real architects of society.",
+  "The world needs strong women. Women who will lift and build others.",
+  "Behind every great family is a strong woman who holds it all together.",
+  "Empowered women empower women.",
+  "Your story is not yet written — and it will be extraordinary."
+];
+
+// Show file name on upload
+document.getElementById('imageInput').addEventListener('change', function() {
+  const fn = document.getElementById('fileName');
+  if (this.files[0]) {
+    fn.textContent = '✓ ' + this.files[0].name;
+    fn.style.display = 'block';
+  }
+});
+
+function showGreeting() {
+  const name = document.getElementById('name').value.trim();
+  const imgFile = document.getElementById('imageInput').files[0];
+  if (!name || !imgFile) {
+    alert('Please enter your name and select a photo.');
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById('popup').classList.add('hidden');
+    const card = document.getElementById('card');
+    card.classList.remove('hidden');
+    document.getElementById('username').textContent = name;
+    document.getElementById('userimg').src = e.target.result;
+    document.getElementById('quote').textContent = quotes[Math.floor(Math.random() * quotes.length)];
+    try { document.getElementById('music').play(); } catch(err) {}
+    petalShower();
+  };
+  reader.readAsDataURL(imgFile);
+}
+
+function petalShower() {
+  const emojis = ['🌸','🌺','🌷','✿','❀'];
+  for (let i = 0; i < 45; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.fontSize = (14 + Math.random() * 18) + 'px';
+    const dur = (3 + Math.random() * 5).toFixed(2);
+    const delay = (Math.random() * 8).toFixed(2);
+    p.style.animationDuration = dur + 's';
+    p.style.animationDelay = delay + 's';
+    document.body.appendChild(p);
+  }
+}
+</script>
+</body>
+</html>
